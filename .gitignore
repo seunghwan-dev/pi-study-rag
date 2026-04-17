@@ -1,0 +1,12 @@
+.env
+papers/
+oracle-data/
+ollama-data/
+tmp/
+*.extracted.json
+node_modules/
+frontend/dist/
+dist/
+__pycache__/
+.pytest_cache/
+.claude/

@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="system-ui, -apple-system, sans-serif" font-size="11">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#6B7280"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-auto">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#3B82F6"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="#FAFAFA" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#1F2937">PI Study RAG — Architecture</text>
+
+  <!-- ══════ LEFT: Data Ingestion ══════ -->
+  <text x="195" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#3B82F6">Data Ingestion Pipeline</text>
+
+  <!-- Sources -->
+  <rect x="30" y="72" width="80" height="32" rx="6" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1.2"/>
+  <text x="70" y="92" text-anchor="middle" font-size="10" fill="#1E40AF">PDF Upload</text>
+  <rect x="120" y="72" width="80" height="32" rx="6" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1.2"/>
+  <text x="160" y="92" text-anchor="middle" font-size="10" fill="#1E40AF">arXiv API</text>
+  <rect x="210" y="72" width="80" height="32" rx="6" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1.2"/>
+  <text x="250" y="92" text-anchor="middle" font-size="10" fill="#1E40AF">URL Fetch</text>
+
+  <!-- Security Layer 1 -->
+  <rect x="45" y="118" width="230" height="30" rx="6" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="160" y="137" text-anchor="middle" font-size="10" font-weight="600" fill="#EF4444">Layer 1: Domain Whitelist</text>
+  <line x1="160" y1="104" x2="160" y2="118" stroke="#6B7280" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- 3-Stage Extraction -->
+  <rect x="45" y="162" width="230" height="62" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.2"/>
+  <text x="160" y="178" text-anchor="middle" font-size="10" font-weight="600" fill="#1E40AF">3-Stage Extraction</text>
+  <text x="160" y="193" text-anchor="middle" font-size="9" fill="#3B82F6">1. PyMuPDF Text (free)</text>
+  <text x="160" y="205" text-anchor="middle" font-size="9" fill="#3B82F6">2. PyMuPDF Tables (free)</text>
+  <text x="160" y="217" text-anchor="middle" font-size="9" fill="#3B82F6">3. VLM Figures (selective)</text>
+  <line x1="160" y1="148" x2="160" y2="162" stroke="#6B7280" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Security Layer 2 -->
+  <rect x="45" y="238" width="230" height="30" rx="6" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="160" y="257" text-anchor="middle" font-size="10" font-weight="600" fill="#EF4444">Layer 2: Chunk Sanitization</text>
+  <line x1="160" y1="224" x2="160" y2="238" stroke="#6B7280" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Embedding -->
+  <rect x="85" y="282" width="150" height="32" rx="6" fill="#F0FDF4" stroke="#10B981" stroke-width="1.2"/>
+  <text x="160" y="302" text-anchor="middle" font-size="10" fill="#047857">e5-large (1024dim)</text>
+  <line x1="160" y1="268" x2="160" y2="282" stroke="#6B7280" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Oracle -->
+  <rect x="60" y="328" width="200" height="42" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.2"/>
+  <text x="160" y="346" text-anchor="middle" font-size="11" font-weight="600" fill="#92400E">Oracle 26ai</text>
+  <text x="160" y="361" text-anchor="middle" font-size="9" fill="#A16207">HNSW Vector + BM25 Text + JSON</text>
+  <line x1="160" y1="314" x2="160" y2="328" stroke="#6B7280" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- ══════ RIGHT: Query Pipeline ══════ -->
+  <text x="590" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#3B82F6">Query Pipeline</text>
+
+  <!-- Question -->
+  <rect x="520" y="72" width="140" height="32" rx="6" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1.2"/>
+  <text x="590" y="92" text-anchor="middle" font-size="10" fill="#1E40AF">Question Input</text>
+
+  <!-- Embedding (query) -->
+  <rect x="515" y="118" width="150" height="32" rx="6" fill="#F0FDF4" stroke="#10B981" stroke-width="1.2"/>
+  <text x="590" y="138" text-anchor="middle" font-size="10" fill="#047857">e5-large "query:"</text>
+  <line x1="590" y1="104" x2="590" y2="118" stroke="#6B7280" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- RRF Search -->
+  <rect x="505" y="164" width="170" height="42" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.2"/>
+  <text x="590" y="182" text-anchor="middle" font-size="10" font-weight="600" fill="#1E40AF">RRF Hybrid Search</text>
+  <text x="590" y="198" text-anchor="middle" font-size="9" fill="#3B82F6">Vector + BM25, k=60</text>
+  <line x1="590" y1="150" x2="590" y2="164" stroke="#6B7280" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Oracle connection -->
+  <line x1="260" y1="349" x2="505" y2="185" stroke="#F59E0B" stroke-width="1.2" stroke-dasharray="4,3"/>
+
+  <!-- Security Layer 3 -->
+  <rect x="495" y="220" width="190" height="30" rx="6" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="590" y="239" text-anchor="middle" font-size="10" font-weight="600" fill="#EF4444">Layer 3: LLM Prompt Defense</text>
+  <line x1="590" y1="206" x2="590" y2="220" stroke="#6B7280" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- LLM -->
+  <rect x="510" y="264" width="160" height="42" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1.2"/>
+  <text x="590" y="282" text-anchor="middle" font-size="11" font-weight="600" fill="#5B21B6">Gemma 4</text>
+  <text x="590" y="298" text-anchor="middle" font-size="9" fill="#7C3AED">E4B (fast) / 26B (smart)</text>
+  <line x1="590" y1="250" x2="590" y2="264" stroke="#6B7280" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Output modes -->
+  <rect x="490" y="320" width="70" height="28" rx="6" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1"/>
+  <text x="525" y="338" text-anchor="middle" font-size="9" fill="#1E40AF">Tutor</text>
+  <rect x="568" y="320" width="70" height="28" rx="6" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1"/>
+  <text x="603" y="338" text-anchor="middle" font-size="9" fill="#5B21B6">Socratic</text>
+  <rect x="646" y="320" width="60" height="28" rx="6" fill="#F0FDF4" stroke="#10B981" stroke-width="1"/>
+  <text x="676" y="338" text-anchor="middle" font-size="9" fill="#047857">Quiz</text>
+  <line x1="590" y1="306" x2="590" y2="320" stroke="#6B7280" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- ══════ BOTTOM: Features ══════ -->
+  <line x1="30" y1="400" x2="770" y2="400" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="400" y="425" text-anchor="middle" font-size="12" font-weight="600" fill="#6B7280">Analytics &amp; Agents</text>
+
+  <rect x="40" y="440" width="160" height="52" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
+  <text x="120" y="460" text-anchor="middle" font-size="10" font-weight="600" fill="#92400E">Dashboard</text>
+  <text x="120" y="478" text-anchor="middle" font-size="9" fill="#A16207">Coverage, Streak, Review</text>
+
+  <rect x="220" y="440" width="160" height="52" rx="8" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1"/>
+  <text x="300" y="460" text-anchor="middle" font-size="10" font-weight="600" fill="#1E40AF">History</text>
+  <text x="300" y="478" text-anchor="middle" font-size="9" fill="#3B82F6">Q&amp;A + Quiz records</text>
+
+  <rect x="400" y="440" width="180" height="52" rx="8" fill="#F0FDF4" stroke="#10B981" stroke-width="1"/>
+  <text x="490" y="460" text-anchor="middle" font-size="10" font-weight="600" fill="#047857">Survey Agent</text>
+  <text x="490" y="478" text-anchor="middle" font-size="9" fill="#059669">Reinforce / Deepen / Bridge / Discover</text>
+
+  <rect x="600" y="440" width="160" height="52" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1"/>
+  <text x="680" y="460" text-anchor="middle" font-size="10" font-weight="600" fill="#5B21B6">Category Classifier</text>
+  <text x="680" y="478" text-anchor="middle" font-size="9" fill="#7C3AED">LLM batch, 10 categories</text>
+
+  <!-- Frontend bar -->
+  <rect x="40" y="520" width="720" height="36" rx="8" fill="#1E293B"/>
+  <text x="400" y="543" text-anchor="middle" font-size="11" font-weight="600" fill="#F8FAFC">React 18 + TypeScript + Tailwind v4 — LIVE / DEMO auto-detect</text>
+
+  <!-- Legend -->
+  <rect x="40" y="572" width="12" height="12" rx="2" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="58" y="582" font-size="9" fill="#6B7280">Security Layer</text>
+  <rect x="150" y="572" width="12" height="12" rx="2" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1"/>
+  <text x="168" y="582" font-size="9" fill="#6B7280">Pipeline</text>
+  <rect x="230" y="572" width="12" height="12" rx="2" fill="#F0FDF4" stroke="#10B981" stroke-width="1"/>
+  <text x="248" y="582" font-size="9" fill="#6B7280">ML/Embedding</text>
+  <rect x="330" y="572" width="12" height="12" rx="2" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
+  <text x="348" y="582" font-size="9" fill="#6B7280">Storage</text>
+  <rect x="410" y="572" width="12" height="12" rx="2" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1"/>
+  <text x="428" y="582" font-size="9" fill="#6B7280">LLM</text>
+</svg>
