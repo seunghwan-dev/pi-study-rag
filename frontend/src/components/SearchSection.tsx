@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import { Search, Loader2, BookOpen, MessageCircle } from "lucide-react";
 import { useApp } from "../contexts/AppContext";
-import { mockCategories, mockTutorAnswer, mockSocraticAnswer } from "../mock/mockData";
+import {
+  mockCategories,
+  MOCK_TUTOR_ANSWERS,
+  MOCK_SOCRATIC_ANSWERS,
+  EXAMPLE_QUERIES,
+} from "../mock/mockData";
 import MarkdownView from "./MarkdownView";
 import type { AskResponse, CategoryItem } from "../types/study";
-
-const EXAMPLE_QUERIES = [
-  "Small Data MLの一般的なアプローチは？",
-  "Transfer Learningとは？",
-  "Digital Twinの最新動向は？",
-];
 
 export default function SearchSection() {
   const { isLive } = useApp();
@@ -51,7 +50,9 @@ export default function SearchSection() {
     setShowAnswer(false);
     if (!isLive) {
       await new Promise((r) => setTimeout(r, 1000));
-      setResult(mode === "tutor" ? mockTutorAnswer : mockSocraticAnswer);
+      const map = mode === "tutor" ? MOCK_TUTOR_ANSWERS : MOCK_SOCRATIC_ANSWERS;
+      const fallbackKey = "Small Data MLの一般的なアプローチは？";
+      setResult(map[query.trim()] ?? map[fallbackKey]);
       setLoading(false);
       return;
     }

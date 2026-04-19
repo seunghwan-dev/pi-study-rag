@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { PenLine, Loader2, CheckCircle, XCircle, AlertCircle, RefreshCw } from "lucide-react";
 import { useApp } from "../contexts/AppContext";
-import { mockCategories, mockQuizGenerate, mockQuizEvaluate } from "../mock/mockData";
+import { mockCategories, MOCK_QUIZZES, MOCK_EVALUATIONS } from "../mock/mockData";
 import MarkdownView from "./MarkdownView";
 import type { QuizGenerateResponse, QuizEvaluateResponse, CategoryItem } from "../types/study";
 
 type Phase = "idle" | "question" | "answering" | "result";
 type Difficulty = "auto" | "basic" | "intermediate" | "advanced";
+type QuizWithAnswer = QuizGenerateResponse & { model_answer?: string };
 
 const DIFFICULTY_OPTIONS: { value: Difficulty; label: string }[] = [
   { value: "auto", label: "お任せ" },
@@ -27,10 +28,12 @@ export default function QuizSection() {
   const [category, setCategory] = useState<string>("");
   const [difficulty, setDifficulty] = useState<Difficulty>("auto");
   const [categories, setCategories] = useState<CategoryItem[]>([]);
-  const [quiz, setQuiz] = useState<QuizGenerateResponse | null>(null);
+  const [quiz, setQuiz] = useState<QuizWithAnswer | null>(null);
   const [answer, setAnswer] = useState("");
   const [evalResult, setEvalResult] = useState<QuizEvaluateResponse | null>(null);
   const [loading, setLoading] = useState(false);
+  const [quizIndex, setQuizIndex] = useState(0);
+  const [showModelAnswer, setShowModelAnswer] = useState(false);
 
   useEffect(() => {
     if (!isLive) { setCategories(mockCategories); return; }
@@ -45,9 +48,12 @@ export default function QuizSection() {
     setQuiz(null);
     setAnswer("");
     setEvalResult(null);
+    setShowModelAnswer(false);
     if (!isLive) {
       await new Promise((r) => setTimeout(r, 1000));
-      setQuiz(mockQuizGenerate);
+      const next = MOCK_QUIZZES[quizIndex % MOCK_QUIZZES.length];
+      setQuiz(next);
+      setQuizIndex((i) => i + 1);
       setPhase("question");
       setLoading(false);
       return;
@@ -76,7 +82,8 @@ export default function QuizSection() {
     setLoading(true);
     if (!isLive) {
       await new Promise((r) => setTimeout(r, 1000));
-      setEvalResult(mockQuizEvaluate);
+      const quizId = quiz?.quiz_id ?? "demo-quiz-001";
+      setEvalResult(MOCK_EVALUATIONS[quizId] ?? MOCK_EVALUATIONS["demo-quiz-001"]);
       setPhase("result");
       setLoading(false);
       return;
@@ -117,6 +124,7 @@ export default function QuizSection() {
     setQuiz(null);
     setAnswer("");
     setEvalResult(null);
+    setShowModelAnswer(false);
   };
 
   return (
@@ -202,7 +210,23 @@ export default function QuizSection() {
                 <RefreshCw className="w-4 h-4" />
                 別の問題
               </button>
+              {!isLive && quiz.model_answer && (
+                <button
+                  type="button"
+                  onClick={() => setShowModelAnswer((s) => !s)}
+                  className="px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-1"
+                >
+                  {showModelAnswer ? "模範解答を隠す" : "模範解答を見る (デモ用)"}
+                </button>
+              )}
             </div>
+
+            {showModelAnswer && quiz.model_answer && (
+              <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20">
+                <p className="text-xs font-semibold text-blue-600 mb-1">模範解答 (デモ用)</p>
+                <MarkdownView content={quiz.model_answer} className="text-sm" />
+              </div>
+            )}
           </div>
         )}
 
