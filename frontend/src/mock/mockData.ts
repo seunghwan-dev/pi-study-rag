@@ -14,6 +14,13 @@ export const EXAMPLE_QUERIES = [
   "Digital Twinの最新動向は？",
 ] as const;
 
+// Example keywords for ArxivTab (P1). Works in both Live and DEMO modes.
+export const EXAMPLE_ARXIV_QUERIES = [
+  "small data machine learning",
+  "physics-informed neural network",
+  "digital twin process",
+] as const;
+
 export const mockCategories: CategoryItem[] = [
   { category: "small_data", label: "Small Data", chunk_count: 45 },
   { category: "digital_twin", label: "Digital Twin", chunk_count: 52 },

@@ -1,7 +1,12 @@
 import { useState, useRef } from "react";
 import { Upload, Search, Plus, CheckCircle, Loader2 } from "lucide-react";
 import { useApp } from "../contexts/AppContext";
-import { mockIngestResult, mockArxivSearch, mockFetchResult } from "../mock/mockData";
+import {
+  mockIngestResult,
+  mockArxivSearch,
+  mockFetchResult,
+  EXAMPLE_ARXIV_QUERIES,
+} from "../mock/mockData";
 import type { IngestResponse, PaperSchema, FetchPaperResponse } from "../types/study";
 
 type Tab = "upload" | "arxiv";
@@ -67,6 +72,15 @@ function UploadTab({ isLive }: { isLive: boolean }) {
     }
   };
 
+  const runDemoIngest = async () => {
+    setUploading(true);
+    setError("");
+    setResult(null);
+    await new Promise((r) => setTimeout(r, 1000));
+    setResult(mockIngestResult);
+    setUploading(false);
+  };
+
   return (
     <div>
       <div
@@ -99,6 +113,20 @@ function UploadTab({ isLive }: { isLive: boolean }) {
         }}
       />
 
+      {!isLive && (
+        <div className="mt-3 flex items-center gap-2 text-sm">
+          <span className="text-gray-500 dark:text-gray-400">📄 デモ:</span>
+          <button
+            type="button"
+            onClick={runDemoIngest}
+            disabled={uploading}
+            className="text-xs px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/50 disabled:opacity-50 transition-colors"
+          >
+            サンプル論文をアップロード
+          </button>
+        </div>
+      )}
+
       {result && (
         <div className="mt-4 p-3 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 text-sm">
           <p className="flex items-center gap-1 font-medium text-emerald-700 dark:text-emerald-400">
@@ -130,8 +158,9 @@ function ArxivTab({ isLive }: { isLive: boolean }) {
   const [fetchingId, setFetchingId] = useState<string | null>(null);
   const [fetchResult, setFetchResult] = useState<FetchPaperResponse | null>(null);
 
-  const handleSearch = async () => {
-    if (!query.trim()) return;
+  const handleSearch = async (q?: string) => {
+    const effective = (q ?? query).trim();
+    if (!effective) return;
     setSearching(true);
     setPapers([]);
     setFetchResult(null);
@@ -146,7 +175,7 @@ function ArxivTab({ isLive }: { isLive: boolean }) {
       const res = await fetch("/api/v1/study/search-papers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query, max_results: 8 }),
+        body: JSON.stringify({ query: effective, max_results: 8 }),
       });
       if (res.status === 429) {
         setSearchError("arXivのレート制限中です。数分待ってから再試行してください。");
@@ -204,13 +233,28 @@ function ArxivTab({ isLive }: { isLive: boolean }) {
           className="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <button
-          onClick={handleSearch}
+          onClick={() => handleSearch()}
           disabled={searching}
           className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-50 flex items-center gap-1"
         >
           {searching ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
           検索
         </button>
+      </div>
+
+      <div className="mt-2 flex flex-wrap gap-2">
+        <span className="text-xs text-gray-500 dark:text-gray-400 self-center">例:</span>
+        {EXAMPLE_ARXIV_QUERIES.map((q) => (
+          <button
+            key={q}
+            type="button"
+            onClick={() => { setQuery(q); handleSearch(q); }}
+            disabled={searching}
+            className="text-xs px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/50 disabled:opacity-50 transition-colors"
+          >
+            {q}
+          </button>
+        ))}
       </div>
 
       {papers.length > 0 && (
