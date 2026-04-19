@@ -1,7 +1,23 @@
 # PI Study RAG
 
+[日本語版はこちら](./README.ja.md)
+
+![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)
+![Oracle](https://img.shields.io/badge/Oracle-26ai-F80000?logo=oracle&logoColor=white)
+![Ollama](https://img.shields.io/badge/Ollama-Gemma%204-000000?logo=ollama&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![License](https://img.shields.io/badge/License-Personal%20Use-orange)
+
 Personal knowledge base for Process Informatics research.
 Search and learn from academic papers with VLM + RAG hybrid search.
+
+## ▶ Live Demo (GitHub Pages)
+[https://seunghwan-dev.github.io/pi-study-rag/](https://seunghwan-dev.github.io/pi-study-rag/)
+
+**DEMO mode** — no Docker required. Frontend auto-detects backend availability and falls back to mock data when offline.
+
+---
 
 > ⚠️ For personal study use only. Not intended for production deployment.
 > All data sources are open-access papers and public documents.
@@ -17,12 +33,6 @@ Search and learn from academic papers with VLM + RAG hybrid search.
 - **Learning Dashboard** — Coverage tracking, review status, study streak
 - **3-Layer Security** — Domain whitelist → chunk sanitization → LLM prompt defense
 
-## Live Demo
-
-👉 [Try the demo (no Docker required)](https://seunghwan-dev.github.io/pi-study-rag/)
-
-Frontend auto-detects backend availability and falls back to mock data when offline.
-
 ## Architecture
 ![Architecture](docs/architecture.svg)
 
@@ -34,7 +44,7 @@ Frontend auto-detects backend availability and falls back to mock data when offl
 | LLM | Gemma 4 E4B via Ollama |
 | Embedding | multilingual-e5-large (1024dim) |
 | Backend | FastAPI (Python), 10 API endpoints, 32 tests |
-| Frontend | React 18 + TypeScript + Tailwind CSS v4 |
+| Frontend | React 19 + TypeScript + Tailwind CSS v4 |
 
 ## Quick Start
 ```bash
