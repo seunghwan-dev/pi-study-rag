@@ -55,7 +55,7 @@ function UploadTab({ isLive }: { isLive: boolean }) {
     setError("");
     setResult(null);
     if (!isLive) {
-      await new Promise((r) => setTimeout(r, 3500));
+      await new Promise((r) => setTimeout(r, 2500));
       setResult(mockIngestResult);
       setUploading(false);
       return;
@@ -77,7 +77,7 @@ function UploadTab({ isLive }: { isLive: boolean }) {
     setUploading(true);
     setError("");
     setResult(null);
-    await new Promise((r) => setTimeout(r, 3500));
+    await new Promise((r) => setTimeout(r, 2500));
     setResult(mockIngestResult);
     setUploading(false);
   };
@@ -167,7 +167,7 @@ function ArxivTab({ isLive }: { isLive: boolean }) {
     setFetchResult(null);
     setSearchError("");
     if (!isLive) {
-      await new Promise((r) => setTimeout(r, 500));
+      await new Promise((r) => setTimeout(r, 2500));
       setPapers(MOCK_ARXIV_RESULTS[effective] ?? mockArxivSearch);
       setSearching(false);
       return;
@@ -195,7 +195,7 @@ function ArxivTab({ isLive }: { isLive: boolean }) {
     setFetchingId(paper.arxiv_id);
     setFetchResult(null);
     if (!isLive) {
-      await new Promise((r) => setTimeout(r, 3000));
+      await new Promise((r) => setTimeout(r, 2500));
       setFetchResult(mockFetchResult);
       setPapers((prev) =>
         prev.map((p) => (p.arxiv_id === paper.arxiv_id ? { ...p, already_ingested: true } : p))
