@@ -234,6 +234,21 @@ export const mockArxivSearch: PaperSchema[] = [
   { arxiv_id: "2402.67890", title: "Bayesian Active Learning for Quality Control with Limited Samples", authors: ["Weber, M.", "Chen, L."], abstract: "Active learning strategies for quality inspection...", published: "2024-02", pdf_url: "https://arxiv.org/pdf/2402.67890", already_ingested: false },
 ];
 
+// Query-specific arXiv search results (DEMO mode). Keys match EXAMPLE_ARXIV_QUERIES.
+export const MOCK_ARXIV_RESULTS: Record<string, PaperSchema[]> = {
+  "small data machine learning": mockArxivSearch,
+  "physics-informed neural network": [
+    { arxiv_id: "2403.11234", title: "Physics-Informed Neural Networks for Manufacturing Process Control", authors: ["Raissi, M.", "Tanaka, K."], abstract: "We present a PINN framework for controlling nonlinear manufacturing processes with limited sensor data...", published: "2024-03", pdf_url: "https://arxiv.org/pdf/2403.11234", already_ingested: true },
+    { arxiv_id: "2406.20187", title: "PINN-based Digital Twin for Chemical Reactor Monitoring", authors: ["Wang, L.", "Schmidt, A."], abstract: "A physics-informed neural surrogate calibrated against real-time reactor telemetry...", published: "2024-06", pdf_url: "https://arxiv.org/pdf/2406.20187", already_ingested: false },
+    { arxiv_id: "2501.04412", title: "Hybrid Physics-ML Framework for Small-Data Regression", authors: ["Müller, F.", "Ito, H."], abstract: "We combine governing-equation priors with data-driven residual networks to regress on sparse materials data...", published: "2025-01", pdf_url: "https://arxiv.org/pdf/2501.04412", already_ingested: false },
+  ],
+  "digital twin process": [
+    { arxiv_id: "2405.08876", title: "Digital Twin Calibration with Limited Experimental Data", authors: ["Nakamura, S.", "Brown, J."], abstract: "An active-learning calibration loop that selects the most informative experiments for digital twin update...", published: "2024-05", pdf_url: "https://arxiv.org/pdf/2405.08876", already_ingested: true },
+    { arxiv_id: "2409.15603", title: "Real-time Process Digital Twin using IoT Sensor Fusion", authors: ["Yamada, T.", "Petrov, I."], abstract: "We fuse multi-rate IoT streams into a differentiable process twin and demonstrate sub-second latency control...", published: "2024-09", pdf_url: "https://arxiv.org/pdf/2409.15603", already_ingested: false },
+    { arxiv_id: "2502.02108", title: "Bayesian Updating for Digital Twin Parameter Estimation", authors: ["Lee, H.", "Dupont, C."], abstract: "A Bayesian filtering approach that updates digital twin parameters under noisy and partial observations...", published: "2025-02", pdf_url: "https://arxiv.org/pdf/2502.02108", already_ingested: false },
+  ],
+};
+
 export const mockIngestResult: IngestResponse = {
   doc_id: "demo-doc-001",
   title: "Demo Paper \u2014 Small Data Approaches",

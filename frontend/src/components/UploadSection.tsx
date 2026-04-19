@@ -5,6 +5,7 @@ import {
   mockIngestResult,
   mockArxivSearch,
   mockFetchResult,
+  MOCK_ARXIV_RESULTS,
   EXAMPLE_ARXIV_QUERIES,
 } from "../mock/mockData";
 import type { IngestResponse, PaperSchema, FetchPaperResponse } from "../types/study";
@@ -54,7 +55,7 @@ function UploadTab({ isLive }: { isLive: boolean }) {
     setError("");
     setResult(null);
     if (!isLive) {
-      await new Promise((r) => setTimeout(r, 1000));
+      await new Promise((r) => setTimeout(r, 3500));
       setResult(mockIngestResult);
       setUploading(false);
       return;
@@ -76,7 +77,7 @@ function UploadTab({ isLive }: { isLive: boolean }) {
     setUploading(true);
     setError("");
     setResult(null);
-    await new Promise((r) => setTimeout(r, 1000));
+    await new Promise((r) => setTimeout(r, 3500));
     setResult(mockIngestResult);
     setUploading(false);
   };
@@ -167,7 +168,7 @@ function ArxivTab({ isLive }: { isLive: boolean }) {
     setSearchError("");
     if (!isLive) {
       await new Promise((r) => setTimeout(r, 500));
-      setPapers(mockArxivSearch);
+      setPapers(MOCK_ARXIV_RESULTS[effective] ?? mockArxivSearch);
       setSearching(false);
       return;
     }
@@ -194,7 +195,7 @@ function ArxivTab({ isLive }: { isLive: boolean }) {
     setFetchingId(paper.arxiv_id);
     setFetchResult(null);
     if (!isLive) {
-      await new Promise((r) => setTimeout(r, 1000));
+      await new Promise((r) => setTimeout(r, 3000));
       setFetchResult(mockFetchResult);
       setPapers((prev) =>
         prev.map((p) => (p.arxiv_id === paper.arxiv_id ? { ...p, already_ingested: true } : p))
