@@ -167,7 +167,7 @@ function ArxivTab({ isLive }: { isLive: boolean }) {
     setFetchResult(null);
     setSearchError("");
     if (!isLive) {
-      await new Promise((r) => setTimeout(r, 2500));
+      await new Promise((r) => setTimeout(r, 2000));
       setPapers(MOCK_ARXIV_RESULTS[effective] ?? mockArxivSearch);
       setSearching(false);
       return;
@@ -195,7 +195,7 @@ function ArxivTab({ isLive }: { isLive: boolean }) {
     setFetchingId(paper.arxiv_id);
     setFetchResult(null);
     if (!isLive) {
-      await new Promise((r) => setTimeout(r, 2500));
+      await new Promise((r) => setTimeout(r, 2000));
       setFetchResult(mockFetchResult);
       setPapers((prev) =>
         prev.map((p) => (p.arxiv_id === paper.arxiv_id ? { ...p, already_ingested: true } : p))
