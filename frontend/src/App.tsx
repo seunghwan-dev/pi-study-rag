@@ -22,7 +22,7 @@ export default function App() {
 
   return (
     <AppProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <div className="flex min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
           <Sidebar />
           <div className="flex-1 ml-60 flex flex-col">
