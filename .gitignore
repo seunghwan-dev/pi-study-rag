@@ -1,4 +1,11 @@
 .env
+.env.*
+!.env.example
+*.key
+*.pem
+*.pfx
+*.p12
+*_report.txt
 papers/
 oracle-data/
 ollama-data/
