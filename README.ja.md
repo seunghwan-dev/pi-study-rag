@@ -12,8 +12,7 @@
 プロセス・インフォマティクス（PI）研究のための個人用ナレッジベース。
 VLM + RAG ハイブリッド検索で学術論文の検索と学習を行えます。
 
-## ▶ ライブデモ (GitHub Pages)
-[https://seunghwan-dev.github.io/pi-study-rag/](https://seunghwan-dev.github.io/pi-study-rag/)
+## [▶ ライブデモ (GitHub Pages)](https://seunghwan-dev.github.io/pi-study-rag/)
 
 **DEMO モード** — Docker 不要。フロントエンドはバックエンドの起動状態を自動で検出し、オフライン時はモックデータにフォールバックします。
 

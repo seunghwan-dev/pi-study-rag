@@ -12,8 +12,7 @@
 Personal knowledge base for Process Informatics research.
 Search and learn from academic papers with VLM + RAG hybrid search.
 
-## ▶ Live Demo (GitHub Pages)
-[https://seunghwan-dev.github.io/pi-study-rag/](https://seunghwan-dev.github.io/pi-study-rag/)
+## [▶ Live Demo (GitHub Pages)](https://seunghwan-dev.github.io/pi-study-rag/)
 
 **DEMO mode** — no Docker required. Frontend auto-detects backend availability and falls back to mock data when offline.
 
