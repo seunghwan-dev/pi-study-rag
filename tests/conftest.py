@@ -3,6 +3,7 @@ Shared test fixtures — mocks all external services (Oracle, Embedding, LLM, VL
 All tests run without Docker.
 """
 
+import os
 import sys
 from pathlib import Path
 
@@ -13,6 +14,9 @@ from httpx import AsyncClient, ASGITransport
 
 # Ensure backend is importable
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend"))
+
+# Dummy DSN satisfies oracle_service.py's import-time ORACLE_DSN guard; all DB access is mocked.
+os.environ.setdefault("ORACLE_DSN", "test/test@localhost:1521/TESTPDB")
 
 from main import app
 from services import oracle_service, embedding_service, llm_service, vlm_service
