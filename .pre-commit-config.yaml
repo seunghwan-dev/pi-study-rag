@@ -1,0 +1,13 @@
+# Pre-commit secret-scanning hook — pi-study-rag (Phase H, layer 1 of 3).
+#
+# One-time setup:   pre-commit install
+# Manual full scan: pre-commit run --all-files
+#
+# The gitleaks hook scans STAGED changes at commit time and automatically
+# uses .gitleaks.toml in the repo root. Because .env is gitignored it is
+# never staged, so it is correctly never scanned here (commit-scoped).
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks

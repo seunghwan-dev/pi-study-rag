@@ -1,0 +1,58 @@
+# gitleaks configuration — pi-study-rag
+# Post-incident secret-scanning baseline (Phase H), layer 1 of 3:
+#   1. this config + pre-commit hook (local, pre-commit time)
+#   2. .github/workflows/secret-scan.yml (CI, push/PR, full history)
+#   3. GitHub Push Protection (server-side, user-enabled)
+title = "pi-study-rag gitleaks config"
+
+[extend]
+# Inherit gitleaks' built-in ruleset: OpenAI sk-, AWS AKIA, GitHub ghp_/ghs_,
+# GCP, Slack, private-key blocks, generic high-entropy, etc.
+useDefault = true
+
+# ── Project-specific rules ───────────────────────────────────────────────────
+
+[[rules]]
+id = "oracle-credential-plaintext"
+description = "Plaintext Oracle password (assignment / IDENTIFIED BY)"
+regex = '''(?i)(?:oracle_pwd|oracle_password|identified\s+by)["':=\s]+["']?([^\s"'#${}/@]{6,})'''
+keywords = ["oracle_pwd", "oracle_password", "identified by"]
+secretGroup = 1
+
+[[rules]]
+id = "oracle-dsn-plaintext"
+description = "Plaintext credential embedded in an Oracle DSN (user/pass@host:port/service)"
+regex = '''(?i)\b[a-z][a-z0-9_$]{1,30}/([^\s"'#${}/@]{6,})@[a-z0-9_.\-]+:\d{2,5}/[a-z0-9_]+'''
+keywords = ["1521", "freepdb", "localhost"]
+secretGroup = 1
+
+# ── Allowlist ────────────────────────────────────────────────────────────────
+# gitleaks matches allowlist regexes against the detected secret by default
+# (populated in both working-tree and --log-opts history scans), so these stay
+# reliable in history mode (avoids the empty-Line pitfall).
+
+# NOTE: `.env` is intentionally NOT allowlisted. It is gitignored and never
+# committed, so commit-scoped enforcement (pre-commit `--staged`, CI git scan)
+# never evaluates it. A filesystem scan (`gitleaks dir`) will correctly report
+# the real secrets it holds — that is desired: a forced `git add -f .env` must
+# still be caught. Do not add `.env` or its secret values here.
+
+[allowlist]
+description = "placeholders, test fixtures, filter-repo scrub markers, variable references"
+regexes = [
+  # .env.example sanitized placeholder (Phase X-2)
+  '''(?i)\bchangeme\b''',
+  # git-filter-repo replacement marker left in rewritten history (Phase Y1)
+  '''\*\*\*REMOVED\*\*\*''',
+  # conftest.py non-secret test-fixture DSN (Phase Z-fix)
+  '''test/test@localhost:1521/TESTPDB''',
+  # shell / env-var references — not literal values
+  '''\$\{?[A-Z][A-Z0-9_]*\}?''',
+  # conventional placeholder tokens (your-api-key, your_token, ...)
+  '''(?i)your[-_][a-z0-9][a-z0-9_-]+''',
+]
+stopwords = ["changeme", "removed"]
+paths = [
+  '''(^|/)docs/''',
+  '''\.md$''',
+]
