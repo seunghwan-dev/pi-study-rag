@@ -15,7 +15,12 @@ import oracledb
 logger = logging.getLogger(__name__)
 
 # DSN format: user/password@host:port/service
-ORACLE_DSN = os.getenv("ORACLE_DSN", "ADMIN/***REMOVED***@localhost:1521/FREEPDB1")
+ORACLE_DSN = os.getenv("ORACLE_DSN")
+if not ORACLE_DSN:
+    raise RuntimeError(
+        "ORACLE_DSN environment variable is required. "
+        "Set it in .env (see .env.example for format)."
+    )
 
 _pool = None
 
