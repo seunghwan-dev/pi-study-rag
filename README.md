@@ -9,8 +9,8 @@
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
 ![License](https://img.shields.io/badge/License-Personal%20Use-orange)
 
-Personal knowledge base for Process Informatics research.
-Search and learn from academic papers with VLM + RAG hybrid search.
+Personal RAG system for Process Informatics (PI) learning and technical verification.
+Hybrid retrieval (Vector + BM25 + RRF), an autonomous survey agent, VLM + RAG, and a 3-layer security harness, exercised over open-access academic literature.
 
 ## [▶ Live Demo (GitHub Pages)](https://seunghwan-dev.github.io/pi-study-rag/)
 
@@ -89,11 +89,5 @@ cd frontend && npm install && npm run dev
 
 Before: 22 pages → 1347s, $0.50 / After: 22 pages → 36s, $0.00 (**37x faster**)
 
-## Pipeline Reuse from FieldOps-AI
-| Aspect | FieldOps-AI | PI Study RAG |
-|--------|-------------|-------------|
-| Domain | Manufacturing | PI research |
-| LLM | Qwen 2.5 7B | Gemma 4 E4B |
-| Unique | ML+RAG Fusion | Survey + Quiz + 3-stage |
-
-Same architecture, different domain.
+## License
+MIT, see [LICENSE](LICENSE).

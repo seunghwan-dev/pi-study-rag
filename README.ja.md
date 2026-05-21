@@ -9,8 +9,8 @@
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
 ![License](https://img.shields.io/badge/License-Personal%20Use-orange)
 
-プロセス・インフォマティクス（PI）研究のための個人用ナレッジベース。
-VLM + RAG ハイブリッド検索で学術論文の検索と学習を行えます。
+プロセス・インフォマティクス（PI）学習用の個人 RAG システム / 技術検証プロジェクト。
+ハイブリッド検索（Vector + BM25 + RRF）、自律サーベイエージェント、VLM + RAG、3 層セキュリティハーネスを、オープンアクセス論文上で実証します。
 
 ## [▶ ライブデモ (GitHub Pages)](https://seunghwan-dev.github.io/pi-study-rag/)
 
@@ -89,11 +89,5 @@ cd frontend && npm install && npm run dev
 
 改善前: 22 ページ → 1347 秒、$0.50 / 改善後: 22 ページ → 36 秒、$0.00（**37 倍高速**）
 
-## FieldOps-AI からのパイプライン再利用
-| 観点 | FieldOps-AI | PI Study RAG |
-|--------|-------------|-------------|
-| ドメイン | 製造業 | PI 研究 |
-| LLM | Qwen 2.5 7B | Gemma 4 E4B |
-| 独自機能 | ML+RAG フュージョン | Survey + Quiz + 3 段階抽出 |
-
-同じアーキテクチャ、異なるドメイン。
+## ライセンス
+MIT、[LICENSE](LICENSE) を参照してください。
