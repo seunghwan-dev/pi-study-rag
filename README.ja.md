@@ -1,5 +1,7 @@
 # PI Study RAG
 
+**技術検証 — RAG ハイブリッド検索 + 自律サーベイエージェント**
+
 [English version](./README.md)
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)
@@ -88,6 +90,16 @@ cd frontend && npm install && npm run dev
 | 図版 | GPT-4o Vision（選択的） | 約 $0.02/ページ |
 
 改善前: 22 ページ → 1347 秒、$0.50 / 改善後: 22 ページ → 36 秒、$0.00（**37 倍高速**）
+
+## ロードマップ
+
+本リポジトリは技術検証であり、以下は設計済みの拡張項目（未実装）です。
+
+- **クエリリライト** — 検索前にクエリを書き換え、曖昧な質問の再現率を改善
+- **CI/CD 拡張** — 既存の secret-scan / Pages デプロイ workflow をテスト・ビルド自動化へ拡張
+- **LLM トークン・コスト計測** — Ollama / Azure 横断のリクエスト単位トークン集計
+- **メトリクス・ダッシュボード** — Prometheus + Grafana による検索レイテンシ、ハイブリッド検索品質、サーベイエージェント進捗の可視化
+- **デプロイアーキテクチャ文書** — ローカル docker-compose を超えた本番トポロジ
 
 ## ライセンス
 MIT、[LICENSE](LICENSE) を参照してください。

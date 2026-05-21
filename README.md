@@ -1,5 +1,7 @@
 # PI Study RAG
 
+**Technical Validation — RAG Hybrid Search + Autonomous Survey Agent**
+
 [日本語版はこちら](./README.ja.md)
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)
@@ -88,6 +90,16 @@ cd frontend && npm install && npm run dev
 | Figures | GPT-4o Vision (selective) | ~$0.02/page |
 
 Before: 22 pages → 1347s, $0.50 / After: 22 pages → 36s, $0.00 (**37x faster**)
+
+## Roadmap
+
+This repository is a technical validation; the items below are designed extensions, not yet implemented.
+
+- **Query rewriting** — rewrite user queries before retrieval to improve recall on under-specified questions
+- **CI/CD expansion** — extend the existing secret-scan and Pages-deploy workflows into full test/build automation
+- **LLM token & cost tracking** — per-request token accounting across Ollama and Azure
+- **Metrics & dashboards** — Prometheus + Grafana for retrieval latency, hybrid-search quality, and survey-agent progress
+- **Deployment architecture doc** — production topology beyond the local docker-compose stack
 
 ## License
 MIT, see [LICENSE](LICENSE).
